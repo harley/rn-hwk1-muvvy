@@ -1,0 +1,3 @@
+rootProject.name = 'hwk1'
+
+include ':app'
