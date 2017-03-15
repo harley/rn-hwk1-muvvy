@@ -23,7 +23,6 @@ export default class Nav extends Component {
             {title: 'Detail', index: 1},
         ];
 
-
         return (
             <Navigator
                 initialRoute={routes[0]}

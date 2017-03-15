@@ -7,13 +7,11 @@ import {
   ListView,
   Image,
   TouchableOpacity,
-} from 'react-native';
+} from 'react-native'
 
 class Movie extends Component {
   constructor(props) {
     super(props);
-
-    // console.log("movie props", this.props.navigator);
 
     this.state = {
       movieTitle: this.props.movie.title,
@@ -28,15 +26,22 @@ class Movie extends Component {
   }
 
   render() {
+    let movie = this.props.movie;
+    let image_src = "https://image.tmdb.org/t/p/w342" + movie.poster_path;
+    
     return (
-      <TouchableOpacity route={this.props.route} onPress={() => this._onPressButton(this.props.navigator, this.props.movie)}>
+      <TouchableOpacity route={this.props.route} onPress={() => this._onPressButton(this.props.navigator, movie)}>
         <View style={styles.movieCell}>
-          <View style={{flex: 1}}>
-            <Image style={styles.movieThumb} source={{uri: this.state.image_src}} />
+          <View style={{flex: 1}}>           
+            <Image 
+              style={styles.movieThumb}
+              resizeMode={"contain"}
+              source={{uri:image_src}}
+            />
           </View>
           <View style={{padding: 10, flex: 3}}>
-            <Text numberOfLines={3} style={styles.movieTitle}>{this.state.movieTitle}</Text>
-            <Text style={styles.movieOverview}>{this.state.movieOverview}</Text>
+            <Text style={styles.movieTitle}>{movie.title}</Text>
+            <Text numberOfLines={5} style={styles.movieOverview}>{movie.overview}</Text>
           </View>
         </View>
       </TouchableOpacity>
