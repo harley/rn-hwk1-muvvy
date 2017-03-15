@@ -7,7 +7,8 @@ import {
   ListView,
   Navigator,
   Platform,
-  NetInfo
+  NetInfo,
+  RefreshControl
 } from 'react-native';
 
 import Movie from './movie.js';
@@ -20,7 +21,13 @@ class Movies extends Component {
    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
    this.state = {
      dataSource: ds.cloneWithRows([]),
+     refreshing: false,
    };
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.fetchData().then(() => this.setState({refreshing: false}))
   }
 
   componentDidMount() {
@@ -29,18 +36,20 @@ class Movies extends Component {
         this.setState({ hasInternet: hasInternetConnection })
         console.debug(`hasInternetConnection:`, hasInternetConnection)
       });
-      this.getMoviesFromApiAsync();
+      this.fetchData();
   }
 
-  getMoviesFromApiAsync() {
+  fetchData() {
     const url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"
     return fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
+        let results = responseJson.results;
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseJson.results)
+          dataSource: this.state.dataSource.cloneWithRows(results)
         })
-        return responseJson.results;
+        console.log("# of results: ", results.length);
+        return results;
       })
       .catch((error) => {
         console.error(error);
@@ -68,8 +77,11 @@ class Movies extends Component {
       <View style={{marginTop: topPadding}}>
         {this.renderInternetStatus()}
         <ListView 
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />}
           contentInset={{top: 0, left: 0, bottom: 0, right: 0}}
-          navigator={this.props.navigator} dataSource={this.state.dataSource} renderRow={(rowData) => this.renderRowData(rowData, this.props.navigator)} />
+          navigator={this.props.navigator} dataSource={this.state.dataSource} renderRow={(rowData) => this.renderRowData(rowData, this.props.navigator)}>
+          <Text>Loading...</Text>
+        </ListView>
       </View>
     );
   }

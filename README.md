@@ -12,7 +12,7 @@ The following **required** functionality is completed:
 - [x] User can view movie details by tapping on a cell.
 - [x] User sees loading state while waiting for the API.
 - [x] User sees an error message when there is a network error.
-- [ ] User can pull to refresh the movie list.
+- [x] User can pull to refresh the movie list.
 
 The following **optional** features are implemented:
 
