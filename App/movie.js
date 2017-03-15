@@ -5,9 +5,11 @@ import {
   Text,
   View,
   ListView,
-  Image,
   TouchableOpacity,
 } from 'react-native'
+
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
 
 class Movie extends Component {
   constructor(props) {
@@ -34,6 +36,7 @@ class Movie extends Component {
         <View style={styles.movieCell}>
           <View style={{flex: 1}}>           
             <Image 
+              indicator={ProgressBar}
               style={styles.movieThumb}
               resizeMode={"contain"}
               source={{uri:image_src}}
@@ -56,10 +59,13 @@ const styles = StyleSheet.create({
     borderColor: '#d6d7da',
     flexDirection: 'row',
     height: 150,
+    alignItems: 'flex-start',
   },
 
   movieThumb: {
-    height: 150
+    height: 150,
+    alignItems: "flex-start",
+    flex: 1
   },
 
   movieTitle: {

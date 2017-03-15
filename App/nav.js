@@ -6,15 +6,19 @@ import {
   View,
   ListView,
   Navigator,
-  Button
+  Button,
 } from 'react-native';
 
 import Movies from './movies.js';
 import MovieDetail from './movieDetail.js';
 
+
 export default class Nav extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            hasInternet: true
+        }
     }
 
     render() {
@@ -27,7 +31,7 @@ export default class Nav extends Component {
             <Navigator
                 initialRoute={routes[0]}
                 renderScene={this.navigatorRenderScene}
-                 navigationBar={
+                navigationBar={
                     <Navigator.NavigationBar routeMapper={{
                         LeftButton: (route, navigator, index, navState) => { 
                             if (route.index==0) { return null }
@@ -36,11 +40,11 @@ export default class Nav extends Component {
                                 <Button onPress={() => navigator.pop()} title="Back" color="#ccc" />
                             )},
                         RightButton: () => null,
-                        Title: (route, navigator, index, navState) => { return (<Button title={route.title} color="#ccc" />); },
+                        Title: (route, navigator, index, navState) => { return (<Button onPress={()=>null} title={route.title} color="#ccc" />); },
                         }}
                         style={{backgroundColor: 'gray'}} />
                 }
-                 />
+                />
         )
     }
 

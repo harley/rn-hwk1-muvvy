@@ -6,7 +6,8 @@ import {
   View,
   ListView,
   Navigator,
-  Platform
+  Platform,
+  NetInfo
 } from 'react-native';
 
 import Movie from './movie.js';
@@ -23,6 +24,11 @@ class Movies extends Component {
   }
 
   componentDidMount() {
+      NetInfo.isConnected.addEventListener('change', (hasInternetConnection) => {
+        console.log("change noticed", hasInternetConnection)
+        this.setState({ hasInternet: hasInternetConnection })
+        console.debug(`hasInternetConnection:`, hasInternetConnection)
+      });
       this.getMoviesFromApiAsync();
   }
 
@@ -47,12 +53,24 @@ class Movies extends Component {
     )
   }
 
-  render() {
+  renderInternetStatus() {
+    if (this.state.hasInternet) { return null }
+
     return (
+        <Text style={{backgroundColor: '#333', color: '#eee', fontSize: 16, textAlign: 'center', padding: 10}}>No Internet Connection</Text>
+    )
+  }
+
+  render() {
+    const topPadding = 64;
+
+    return (
+      <View style={{marginTop: topPadding}}>
+        {this.renderInternetStatus()}
         <ListView 
-          contentInset={{top: (Platform.OS !== 'ios' ? 54 : 64), left: 0, bottom: 0, right: 0}}
-          contentOffset={{x: 0, y: -(Platform.OS !== 'ios' ? 54 : 64)}}
+          contentInset={{top: 0, left: 0, bottom: 0, right: 0}}
           navigator={this.props.navigator} dataSource={this.state.dataSource} renderRow={(rowData) => this.renderRowData(rowData, this.props.navigator)} />
+      </View>
     );
   }
 }

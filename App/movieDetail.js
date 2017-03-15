@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    Image,
     StyleSheet
 } from 'react-native';
+
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
 
 export default class MovieDetail extends Component {
     constructor(props) {
@@ -19,7 +21,7 @@ export default class MovieDetail extends Component {
         let source = {uri: imageSrc}
 
         return (
-            <Image style={styles.backgroundImage} source={source}>
+            <Image indicator={ProgressBar} style={styles.backgroundImage} source={source}>
                 <View style={styles.textContainer}>
                     <Text style={styles.movieTitle}>{movie.title}</Text>
                     <Text style={styles.movieOverview}>{movie.overview}</Text>
