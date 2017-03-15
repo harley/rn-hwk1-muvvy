@@ -6,11 +6,14 @@ import {
   View,
   ListView,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 class Movie extends Component {
   constructor(props) {
     super(props);
+
+    // console.log("movie props", this.props.navigator);
 
     this.state = {
       movieTitle: this.props.movie.title,
@@ -19,17 +22,24 @@ class Movie extends Component {
     }
   }
 
+  _onPressButton(navigator, movie) {
+    console.log("pressing");
+    navigator.push({index: 1, title: movie.title, movie: movie})
+  }
+
   render() {
     return (
-      <View style={styles.movieCell}>
-        <View style={{width: 100}}>
-          <Image resizeMode="contain" style={styles.movieThumb} source={{uri: this.state.image_src}} />
+      <TouchableOpacity route={this.props.route} onPress={() => this._onPressButton(this.props.navigator, this.props.movie)}>
+        <View style={styles.movieCell}>
+          <View style={{flex: 1}}>
+            <Image style={styles.movieThumb} source={{uri: this.state.image_src}} />
+          </View>
+          <View style={{padding: 10, flex: 3}}>
+            <Text numberOfLines={3} style={styles.movieTitle}>{this.state.movieTitle}</Text>
+            <Text style={styles.movieOverview}>{this.state.movieOverview}</Text>
+          </View>
         </View>
-        <View style={{padding: 10}}>
-          <Text style={styles.movieTitle}>{this.state.movieTitle}</Text>
-          <Text style={styles.movieOverview}>{this.state.movieOverview}</Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
@@ -44,11 +54,7 @@ const styles = StyleSheet.create({
   },
 
   movieThumb: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
+    height: 150
   },
 
   movieTitle: {

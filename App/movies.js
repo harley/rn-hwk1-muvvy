@@ -4,15 +4,18 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  Navigator,
+  Platform
 } from 'react-native';
 
 import Movie from './movie.js';
 
 class Movies extends Component {
 
-  constructor() {
-   super();
+  constructor(props) {
+   super(props);
+
    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
    this.state = {
      dataSource: ds.cloneWithRows([]),
@@ -38,20 +41,20 @@ class Movies extends Component {
       });
     }
 
-  renderRowData(rowData) {
+  renderRowData(rowData, navigator) {
     return (
-      <Movie movie={rowData} />
+      <Movie movie={rowData} navigator={navigator}/>
     )
   }
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRowData}
-      />
+        <ListView 
+          contentInset={{top: (Platform.OS !== 'ios' ? 54 : 64), left: 0, bottom: 0, right: 0}}
+          contentOffset={{x: 0, y: -(Platform.OS !== 'ios' ? 54 : 64)}}
+          navigator={this.props.navigator} dataSource={this.state.dataSource} renderRow={(rowData) => this.renderRowData(rowData, this.props.navigator)} />
     );
- }
+  }
 }
 
 module.exports = Movies

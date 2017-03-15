@@ -9,16 +9,17 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Navigator
 } from 'react-native';
 
 
-import Movies from './App/movies.js';
+import Nav from './App/nav.js';
 
 export default class hwk1 extends Component {
   render() {
     return (
-      <Movies />
+      <Nav />
     );
   }
 }
