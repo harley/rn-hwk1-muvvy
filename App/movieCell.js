@@ -1,44 +1,36 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  ListView,
   TouchableOpacity,
-} from 'react-native'
+} from 'react-native';
 
 import Image from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 
-class Movie extends Component {
+class MovieCell extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      movieTitle: this.props.movie.title,
-      movieOverview: this.props.movie.overview,
-      image_src: "https://image.tmdb.org/t/p/w342" + this.props.movie.poster_path
-    }
   }
 
   _onPressButton(navigator, movie) {
-    console.log("pressing");
-    navigator.push({index: 1, title: movie.title, movie: movie})
+    console.log('pressing');
+    navigator.push({index: 1, title: movie.title, movie: movie});
   }
 
   render() {
     let movie = this.props.movie;
-    let image_src = "https://image.tmdb.org/t/p/w342" + movie.poster_path;
+    let image_src = `https://image.tmdb.org/t/p/w342${  movie.poster_path}`;
     
     return (
-      <TouchableOpacity route={this.props.route} onPress={() => this._onPressButton(this.props.navigator, movie)}>
+      <TouchableOpacity onPress={() => this._onPressButton(this.props.navigator, movie)}>
         <View style={styles.movieCell}>
           <View style={{flex: 1}}>           
             <Image 
               indicator={ProgressBar}
               style={styles.movieThumb}
-              resizeMode={"contain"}
+              resizeMode={'contain'}
               source={{uri:image_src}}
             />
           </View>
@@ -48,7 +40,7 @@ class Movie extends Component {
           </View>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
@@ -64,18 +56,20 @@ const styles = StyleSheet.create({
 
   movieThumb: {
     height: 150,
-    alignItems: "flex-start",
-    flex: 1
+    alignItems: 'flex-start',
+    flex: 1,
   },
 
   movieTitle: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
   movieOverview: {
     fontSize: 12,
-  }
-})
+  },
+});
 
-module.exports = Movie
+// MovieCell.propTypes = { movie:React.PropTypes.JSON, navigator: React.PropTypes };
+
+module.exports = MovieCell;
