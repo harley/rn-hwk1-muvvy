@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import MoviesTab from './moviesTab.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Movies extends Component {
   constructor(props) {
@@ -47,14 +48,11 @@ class Movies extends Component {
     return (
       <View style={{marginTop: topPadding, flex: 1}}>
         {this.renderInternetStatus()}
-        <TabBarIOS
-          unselectedTintColor="yellow"
-          tintColor="white"
-          unselectedItemTintColor="red"
-          barTintColor="darkslateblue"
-        >
-          <TabBarIOS.Item
-            title="Now Showing" icon={require('./movies.png')} renderAsOriginal
+        <TabBarIOS>
+          <Icon.TabBarItemIOS
+            iconName="film"
+            title="Now Showing" renderAsOriginal
+            selectedIconColor="green"
             selected={this.state.selectedTab === 'nowPlayingTab'}
             onPress={() => {
               this.setState({
@@ -63,9 +61,11 @@ class Movies extends Component {
             }}
           >
             {this._renderContent(nowPlayingUrl, this.props.navigator)}
-          </TabBarIOS.Item>
-          <TabBarIOS.Item
-            title="Top Rated" systemIcon="featured"
+          </Icon.TabBarItemIOS>
+          <Icon.TabBarItemIOS
+            iconName="star"
+            title="Top Rated" renderAsOriginal
+            selectedIconColor="green"
             selected={this.state.selectedTab === 'topRatedTab'}
             onPress={() => {
               this.setState({
@@ -74,7 +74,7 @@ class Movies extends Component {
             }}
           >
             {this._renderContent(topRatedUrl, this.props.navigator)}
-          </TabBarIOS.Item>
+          </Icon.TabBarItemIOS>
         </TabBarIOS>
       </View>
     );
