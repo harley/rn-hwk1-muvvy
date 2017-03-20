@@ -14,7 +14,7 @@ class Movies extends Component {
     super(props);
     this.state = {
       hasInternet: false,
-      selectedTab: 'nowPlayingTab'
+      selectedTab: 'nowPlayingTab',
     };
   }
 
@@ -36,7 +36,7 @@ class Movies extends Component {
 
   _renderContent(url, navigator) {
     return (
-    <MoviesTab url={url} navigator={navigator} />
+      <MoviesTab url={url} navigator={navigator} currentView={this.props.currentView} />
     );
   }
 
