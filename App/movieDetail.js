@@ -21,12 +21,12 @@ export default class MovieDetail extends Component {
     let source = {uri: imageSrc};
     
     return (
-    <Image indicator={ProgressBar} style={styles.backgroundImage} source={source}>
-    <View style={styles.textContainer}>
-    <Text style={styles.movieTitle}>{movie.title}</Text>
-    <Text style={styles.movieOverview}>{movie.overview}</Text>
-    </View>
-    </Image>
+      <Image indicator={ProgressBar} style={styles.backgroundImage} source={source}>
+        <View style={styles.textContainer}>
+          <Text style={styles.movieTitle}>{movie.title}</Text>
+          <Text style={styles.movieOverview}>{movie.overview}</Text>
+        </View>
+      </Image>
     );
   }
 }

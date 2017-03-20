@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
+  Text,
+  View,
+  Dimensions,
 } from 'react-native';
 
 import Image from 'react-native-image-progress';
@@ -19,43 +22,42 @@ class MovieGridCell extends Component {
   render() {
     let movie = this.props.movie;
     let image_src = `https://image.tmdb.org/t/p/w342${  movie.poster_path}`;
-    
+
     return (
       <TouchableOpacity onPress={() => this._onPressButton(this.props.navigator, movie)}>
-        <Image 
+        <Image
           indicator={ProgressBar}
-          style={styles.movieThumb}
-          resizeMode={'contain'}
+          style={styles.backgroundImage}
           source={{uri:image_src}}
-        />
+        >
+          <View style={styles.movieGridCell}>
+            <Text style={styles.gridCellTitle}>{movie.title}</Text>
+          </View>
+        </Image>
       </TouchableOpacity>
     );
   }
 }
 
+const {width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  movieCell: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    flexDirection: 'row',
-    height: 150,
-    alignItems: 'flex-start',
+  backgroundImage: {
+    flex : 1,
+    resizeMode: 'cover',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'red',
   },
 
-  movieThumb: {
-    height: 150,
-    alignItems: 'flex-start',
-    flex: 1,
+  movieGridCell: {
+    height: (width * 3 / 4),
   },
 
-  movieTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-
-  movieOverview: {
-    fontSize: 12,
+  gridCellTitle: {
+    color: 'rgba(255, 255, 255, 0.3)',
+    marginTop: 10,
+    backgroundColor: 'transparent',
   },
 });
 
